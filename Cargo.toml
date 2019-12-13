@@ -1,0 +1,10 @@
+[package]
+name = "advent-of-code"
+version = "0.1.0"
+authors = ["SmartBro <smartbrostudio@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+tokio = { version = "0.2", features = ["full"] }
+hyper = "0.13"
+hyper-tls = "0.4.0"
