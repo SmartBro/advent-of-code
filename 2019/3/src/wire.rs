@@ -2,30 +2,45 @@ use std::mem;
 use crate::point::Point;
 use crate::segment::Segment;
 
+#[derive(Clone)]
 pub struct Wire {
-    pub segments: Vec<Segment>,
+    segments: Vec<Segment>,
 }
 
 impl Wire {
     pub fn new(input: &str) -> Self {
         let steps: Vec<(char, u16)> = input.split(",").map(|m| parse_move(m)).collect();
         let mut segments: Vec<Segment> = vec![];
-        let mut current = Point(0, 0);
+        let mut current = Point::starting_point();
         for step in steps.iter() {
             let prev = Point::from(current);
-            let distance: i32 = i32::from(step.1);
-            match step.0 {
-                'L' => current.0 -= distance,
-                'R' => current.0 += distance,
-                'U' => current.1 += distance,
-                'D' => current.1 -= distance,
-                _ => println!("Wrong move {:?}", step),
-            }
+            current.move_self(*step);
             segments.push(Segment(prev, current));
         }
         Wire {
             segments,
         }
+    }
+
+    pub fn intersects(self, other: Wire) -> Vec<Point> {
+        let mut all_intersections: Vec<Point> = vec![];
+        for segment in self.segments {
+            let mut intersections = other.clone().intersects_segment(segment);
+            all_intersections.append(&mut intersections);
+        }
+
+        all_intersections
+    }
+
+    pub fn intersects_segment(self, another: Segment) -> Vec<Point> {
+        let mut intersections: Vec<Point> = vec![];
+        for segment in self.segments {
+            let intersection = segment.intersects(another);
+            if !intersection.is_zero() {
+                intersections.push(intersection);
+            }
+        }
+        intersections
     }
 }
 

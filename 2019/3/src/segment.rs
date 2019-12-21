@@ -1,11 +1,13 @@
 use std::fmt;
 use crate::point::Point;
 
+#[derive(Copy, Clone)]
 pub struct Segment(pub Point, pub Point);
 
 impl Segment {
-    pub fn intersects(other: Segment) -> bool {
-        false
+    pub fn intersects(self, other: Segment) -> Point {
+        //TODO: implement intersection logic
+        Point::starting_point()
     }
 }
 
