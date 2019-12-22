@@ -28,11 +28,11 @@ impl Point {
         }
     }
 
-    pub fn manhattan_distance(self, other: Point)-> i32 {
-        (other.x - self.x).abs() + (other.y - self.y).abs()
+    pub fn manhattan_distance(self, other: Point)-> u32 {
+        ((other.x - self.x).abs() + (other.y - self.y).abs()) as u32
     }
 
-    pub fn closest_distance(self, points: Vec<Point>) -> i32 {
+    pub fn closest_distance(self, points: Vec<Point>) -> u32 {
         if points.is_empty() {
             return 0;
         }

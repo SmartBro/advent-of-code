@@ -36,6 +36,10 @@ impl Segment {
     pub fn in_y_range(self, other: Point) -> bool {
         (self.0.y >= other.y && self.1.y <= other.y) || (self.1.y >= other.y && self.0.y <= other.y)
     }
+
+    pub fn len(self) -> u32 {
+        self.0.manhattan_distance(self.1)
+    }
 }
 
 impl fmt::Display for Segment {
