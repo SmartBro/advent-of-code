@@ -1,4 +1,3 @@
-use std::mem;
 use crate::point::Point;
 use crate::segment::Segment;
 
@@ -36,8 +35,13 @@ impl Wire {
         let mut intersections: Vec<Point> = vec![];
         for segment in self.segments {
             let intersection = segment.intersects(another);
-            if !intersection.is_zero() {
-                intersections.push(intersection);
+            match intersection {
+                Some(inner) => {
+                    if !inner.is_zero() {
+                        intersections.push(inner);
+                    }
+                },
+                None => {}
             }
         }
         intersections

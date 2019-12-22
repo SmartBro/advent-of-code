@@ -31,6 +31,20 @@ impl Point {
     pub fn manhattan_distance(self, other: Point)-> i32 {
         (other.x - self.x).abs() + (other.y - self.y).abs()
     }
+
+    pub fn closest_distance(self, points: Vec<Point>) -> i32 {
+        if points.is_empty() {
+            return 0;
+        }
+        let mut min_distance = self.manhattan_distance(points[0]);
+        for point in points {
+            let distance = self.manhattan_distance(point);
+            if distance < min_distance {
+                min_distance = distance;
+            }
+        }
+        min_distance
+    }
 }
 
 impl fmt::Display for Point {
